@@ -1,0 +1,11 @@
+I LoRa_modul mit dem raspi_zero verbinden und Daten empfangen
+
+II raspi_zero und LoRa_modul empfangen von verschiedenen LoRa-Sendern durch MQTT Daten und speichern sie in einer Datenbank ab
+
+III raspi_zero hostet Website im lokalen Netzwerk auf dem Daten (Bodenfeuchtigkeit, Batteriespannung und Bewässerungsanfragen per LoRa und Temperaturdaten per GPIO) dargestellt werden
+
+IV Auf der Website kann die Schaltung (der Pumpe mittels GPIO-Pin) überschrieben werden
+
+V Der raspi_zero kann mit dem SIM7600G-H 4G HAT (B) für Raspberry Pi Daten empfangen und senden
+
+VI Auf die Website des raspi_zero kann über das SIM7600G-H 4G HAT (B) für Raspberry Pi und einen Webhosting Service zugegriffen werden
