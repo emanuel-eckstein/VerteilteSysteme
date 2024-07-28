@@ -10,6 +10,10 @@ V Der raspi_zero kann mit dem SIM7600G-H 4G HAT (B) für Raspberry Pi Daten empf
 
 VI Auf die Website des raspi_zero kann über das SIM7600G-H 4G HAT (B) für Raspberry Pi und einen Webhosting Service zugegriffen werden
 
+anderes:
+-> Platinenentwurf (Relais, LoRa, Raspi, LED, ACDC-Wandler)
+-> nachrüsten vom Spannungsmesser bei den HydroIntellix-Geräten
+-> passenden SIM-Kartenverkäufer ausfindig machen (Portweiterleitung, statische IP, DynDNS)
 
 Links (random):
 https://www.berrybase.de/sim7600g-h-4g-hat-b-fuer-raspberry-pi-mobilfunk-und-gnss
