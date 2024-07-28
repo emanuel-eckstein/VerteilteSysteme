@@ -9,3 +9,12 @@ IV Auf der Website kann die Schaltung (der Pumpe mittels GPIO-Pin) überschriebe
 V Der raspi_zero kann mit dem SIM7600G-H 4G HAT (B) für Raspberry Pi Daten empfangen und senden
 
 VI Auf die Website des raspi_zero kann über das SIM7600G-H 4G HAT (B) für Raspberry Pi und einen Webhosting Service zugegriffen werden
+
+
+Links (random):
+https://www.berrybase.de/sim7600g-h-4g-hat-b-fuer-raspberry-pi-mobilfunk-und-gnss
+
+https://www.youtube.com/watch?v=ABnwz-IYzqA
+
+https://forum-raspberrypi.de/forum/thread/57135-zugriff-auf-meinen-raspberry-ueber-lte/
+
