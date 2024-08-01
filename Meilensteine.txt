@@ -1,6 +1,11 @@
 I LoRa_modul mit dem raspi_zero verbinden und Daten empfangen
 
--> Donnerstag
+https://www.raspberrypi.com/software/
+--> auf SD-Karte installieren, mit grafischer Benutzeroberfläche (kein headless)
+https://circuitdigest.com/microcontroller-projects/raspberry-pi-with-lora-peer-to-peer-communication-with-arduino
+
+-> LoRa braucht dennoch externe Stromversorgung, ist mit auf dem Board!
+-> testen mit HydroIntellix-Gerät 
 
 II raspi_zero und LoRa_modul empfangen von verschiedenen LoRa-Sendern durch MQTT Daten und speichern sie in einer Datenbank ab
 
