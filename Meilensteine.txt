@@ -1,10 +1,27 @@
 I LoRa_modul mit dem raspi_zero verbinden und Daten empfangen
 
+https://www.raspberrypi.com/software/
+--> auf SD-Karte installieren, mit grafischer Benutzeroberfläche (kein headless)
+https://circuitdigest.com/microcontroller-projects/raspberry-pi-with-lora-peer-to-peer-communication-with-arduino
+
+-> LoRa braucht dennoch externe Stromversorgung, ist mit auf dem Board!
+-> testen mit HydroIntellix-Gerät 
+
 II raspi_zero und LoRa_modul empfangen von verschiedenen LoRa-Sendern durch MQTT Daten und speichern sie in einer Datenbank ab
+
+geg: HydroIntellix Geräte senden LoRa Daten, die noch unverschlüsslet sind
+
+a) Code der HydroIntellix Geräte erweitern
+b) neuen Code schreiben für raspi, um mqtt Daten zu empfangen und zu verarbeiten. -> 4 GPIO Pins freilassen, 3x LED, 1x Relais
 
 III raspi_zero hostet Website im lokalen Netzwerk auf dem Daten (Bodenfeuchtigkeit, Batteriespannung und Bewässerungsanfragen per LoRa und Temperaturdaten per GPIO) dargestellt werden
 
+-> Internetrechereche
+
 IV Auf der Website kann die Schaltung (der Pumpe mittels GPIO-Pin) überschrieben werden
+
+canceln
+?????????
 
 V Der raspi_zero kann mit dem SIM7600G-H 4G HAT (B) für Raspberry Pi Daten empfangen und senden
 
@@ -21,4 +38,6 @@ https://www.berrybase.de/sim7600g-h-4g-hat-b-fuer-raspberry-pi-mobilfunk-und-gns
 https://www.youtube.com/watch?v=ABnwz-IYzqA
 
 https://forum-raspberrypi.de/forum/thread/57135-zugriff-auf-meinen-raspberry-ueber-lte/
+
+--> Code vom Sender hochladen
 
