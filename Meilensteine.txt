@@ -29,7 +29,7 @@ VI Auf die Website des raspi_zero kann über das SIM7600G-H 4G HAT (B) für Rasp
 
 anderes:
 -> Platinenentwurf (Relais, LoRa, Raspi, LED, ACDC-Wandler)
--> nachrüsten vom Spannungsmesser bei den HydroIntellix-Geräten
+-> nachrüsten vom Spannungsmesser bei den HydroIntellix-Geräten (✓, auf Platine 1 erfolgreich, muss noch in Schaltkreis-IDE übernommen werden)
 -> passenden SIM-Kartenverkäufer ausfindig machen (Portweiterleitung, statische IP, DynDNS)
 
 Links (random):
