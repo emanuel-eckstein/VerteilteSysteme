@@ -1,0 +1,20 @@
+###ACDC 220-5V###
+https://de.aliexpress.com/item/1005005797445152.html?src=google&src=google&albch=shopping&acnt=272-267-0231&isdl=y&slnk=&plac=&mtctp=&albbt=Google_7_shopping&aff_platform=google&aff_short_key=UneMJZVf&gclsrc=aw.ds&&albagn=888888&&ds_e_adid=&ds_e_matchtype=&ds_e_device=c&ds_e_network=x&ds_e_product_group_id=&ds_e_product_id=de1005005797445152&ds_e_product_merchant_id=109144202&ds_e_product_country=DE&ds_e_product_language=de&ds_e_product_channel=online&ds_e_product_store_id=&ds_url_v=2&albcp=20542169885&albag=&isSmbAutoCall=false&needSmbHouyi=false&gad_source=1&gclid=Cj0KCQjw2ou2BhCCARIsANAwM2FLI8zqtjabWeh4arzL8evBJxURHPB46MfTS8eiRHlTfdyFyLJmpOkaAljPEALw_wcB
+
+###DCDC 5v-3.3V stepdown###
+https://www.amazon.de/Heemol-Spannungsregler-Einstellen-Stromversorgungsreglers-Stromversorgung/dp/B0CCS57CL5/ref=sr_1_5?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=3T6RXHQRH3BMP&dib=eyJ2IjoiMSJ9.2ZRBe71VAy3gIlQQy48SmGIM4uEX5mcP0bTgWBXz2Sl11Hg72FzoPGmLl2Z2mBwVC7vZEutxpM7GlqsD5VVE5ljyUymjEdmGI8d2hHxdero4P0xl6GHxOVdlyU1V-TuV9G7DJ3UvEkCd0QSx6Vf5B7KQj7pwtOe-T6Qww78vJJTuNbIOOo5EVkd8wPV8jGTAnoX1r3G3Bn8Ft4x_FCUmA4i9WdEvvGEfUL8Lz8rU_n8nOoey8CyglXSXkXXbSKebVBqwYu3HHnwXqSSmWT3l0_HubjbdZtKPzMvqFMoC2zY.vA7fGZdfx5WJb3TOw_BXwsOAF5mK5aeritCg8AjjPjY&dib_tag=se&keywords=5V+to+3.3V&qid=1724072292&sprefix=5v+to+3.3v%2Caps%2C96&sr=8-5
+
+###raspi Zero 2 w###
+https://www.berrybase.de/en/raspberry-pi-zero-2-w
+
+###LoRa module###
+https://de.aliexpress.com/item/1005004531962944.html?spm=a2g0o.order_detail.order_detail_item.4.2b406368q1yGOc&gatewayAdapt=glo2deu
+
+###4G-HAT###
+https://www.berrybase.de/sim7600g-h-4g-hat-b-fuer-raspberry-pi-mobilfunk-und-gnss
+
+###3.3V relais###
+https://www.amazon.de/1-Kanal-Relais-Netzschaltermodul-High-Level-Trigger-Optokoppler-Optoisolierung-ESP8266-Entwicklungsboard/dp/B0CN1C1S7Y/ref=sr_1_1?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=38K7TOSM14G7U&dib=eyJ2IjoiMSJ9.jk6FDf3d13vAdSBysHV3fTEIV7drONNFMOzyp6brYCwbUFbJUkJ2_to_HBdA5VQ_txmgW3-J8Q5t9lIpH_2oRlJ3RKL4TKI1Ks6Eo8kA-VoW6kaIvkmPudzxpQJTnVtNDylPwA4FbRrnTnUhEmxKfzlEm6XKplizr6z-KLG6S68V0ETMWdnetkcTM4LQof2Qs1_uI0GxW_81m4T_yj_8ZD-SKjBeikj97tEDrv_fyU4qcBC3dvRPOzXfF5mF3e8NkjTneJeZc_wyjAufvDUTJNZ9X9pjJ4ToWL_oxldBZrA.kc0mcD9LGi4v8xHyV32ioBPuL1CsUhU4u0xmq5FdNPc&dib_tag=se&keywords=3.3V%2Brelais&qid=1724073020&sprefix=3.3v%2Brelais%2Caps%2C111&sr=8-1&th=1
+
+###LED_triple_light###
+https://www.amazon.de/APKLVSR-Creative-Mini-Ampel-Ampelmodul-Kompatibel/dp/B0CYH13M9C/ref=sr_1_1?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=139NZE71WYR59&dib=eyJ2IjoiMSJ9.iR0xl7wpICS4Mlx9vtHPAtMoCafxRFfn3ubuOevVTRohtNUFNwXTAKTaUmUU2F1eQH8WmGoTbjAn248eolz158Lfpy2soTA_Nq_kml3vvemf3thDSEtm9Mh4GHgJsF-hQuObOEr2iLtaoG6fJmPCH6gftCzWCxb2OFRH0mA6VWeHHqisXd3VBpeBLuA7sKZ0zKvbPGXhP8vlJMWbYqm7DNXVI0hevGthaTD6NkmzwIgKX0navtMLHv9kfFLMC3jNPOiFQtwVmOsSibMLjQchlif4ggRUwRtHWLlV_4PxXzw.hwu_KtyBHf2WksuBpyRlasBQCkEjosRrDaTFo7b9DVo&dib_tag=se&keywords=3+led+ampel&qid=1724073171&refinements=p_36%3A-900&rnid=389439011&sprefix=3+led+ampel%2Caps%2C95&sr=8-1

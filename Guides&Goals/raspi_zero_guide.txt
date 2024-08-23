@@ -1,0 +1,25 @@
+raspi zero 2 w mit Desktop 64 bit installation guide
+
+0.0 sudo apt-get update 
+    sudo apt-get upgrade
+
+0.1 enable console auto-Login in raspi-config to save cpu power
+0.3 enable SPI in raspi-config
+
+1.1 python3 -m venv path/to/Umgebung //auch direkt möglich (z.B. rappit)
+1.2 source rappit/bin/activate
+
+
+2. pip install rpi.lgpio //wichtig hier L-GPIO zu verwenden
+
+3. pip install spidev
+
+4. pip install pyLoRa
+
+(5. pip install LoRaRF) 
+
+
+// jetzt ist alles in der venv drin, Code kann jetzt eingefügt werden:
+
+aktuelle Version (6):
+

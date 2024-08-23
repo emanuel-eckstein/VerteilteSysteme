@@ -3,8 +3,8 @@ I LoRa_modul mit dem raspi_zero verbinden und Daten empfangen
 https://www.raspberrypi.com/software/
 --> auf SD-Karte installieren, mit grafischer Benutzeroberfläche (kein headless)
 https://circuitdigest.com/microcontroller-projects/raspberry-pi-with-lora-peer-to-peer-communication-with-arduino
-
-http://raphuscucullatus.blogspot.com/2019/11/ai-thinker-lora-ra-02-am-raspberry-pi.html
+NEU: 
+https://iotdesignpro.com/projects/wireless-communication-between-arduino-and-raspberry-pi-using-lora-module-sx1278
 
 -> LoRa braucht dennoch externe Stromversorgung, ist mit auf dem Board!
 -> testen mit HydroIntellix-Gerät 
