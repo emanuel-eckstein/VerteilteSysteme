@@ -43,3 +43,32 @@ https://forum-raspberrypi.de/forum/thread/57135-zugriff-auf-meinen-raspberry-ueb
 
 --> Code vom Sender hochladen
 
+TODOX:
+
+Prüfen, ob Leistung des 5V-3.3V Converters passt
+Prüfen, ob Temperatur nicht an 3.3V muss
+
+TODO: 
+
+3D-Gehäuse
+
+Platine verlöten
+
+MQTT für LoRa
+
+MQTT für Raspi 
+
+
+LoRa-Raspi Kommunikation
+
+4GHat-Raspi Kommunikation
+
+5 GPIO Pins (Ampel, Temp-Sens, Relais)
+
+(SIM-Karte mit Internet zum Testen)
+
+
+
+
+
+
