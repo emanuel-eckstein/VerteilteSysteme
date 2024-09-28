@@ -56,3 +56,11 @@ Datenmonitor: Zwei Grafiken, eine für BY und eine für BF (jeweils 3 Graphen).
     "value": "XXXX"(0000-1023),
     "checksum": "XX"(11-99)
 }
+
+S1_BY_0845_85
+S2_BY_0511_84
+S2_BF_0882_41
+S1_BY_0611_59
+S1_BY_1015_95
+S1_BY_0678_58
+S2_BY_1011_12
