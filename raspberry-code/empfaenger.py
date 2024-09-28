@@ -1,8 +1,9 @@
+import sys
 from time import sleep
 from SX127x.LoRa import *
 from SX127x.board_config import BOARD
-import sys
 
+# Set up the board
 BOARD.setup()
 
 class LoRaRcvCont(LoRa):
@@ -10,39 +11,40 @@ class LoRaRcvCont(LoRa):
         super(LoRaRcvCont, self).__init__(verbose)
         self.set_mode(MODE.SLEEP)
         self.set_dio_mapping([0] * 6)
-        self.buffer = ""  # Buffer to store incomplete messages
+
+        # Set the frequency to 433 MHz and enable CRC
+        self.set_freq(433.0)
+        self.set_pa_config(pa_select=1)  # Power amplifier settings
+        self.set_rx_crc(True)  # Enable CRC to ensure message integrity
 
     def start(self):
         self.reset_ptr_rx()
         self.set_mode(MODE.RXCONT)
+
         while True:
-            # Wait for interrupt on RX_DONE to process message
+            sleep(1)  # Increase delay between packet reads
             sys.stdout.flush()
 
     def on_rx_done(self):
+        print("\nReceived: ")
         self.clear_irq_flags(RxDone=1)
         payload = self.read_payload(nocheck=True)
-        message = bytes(payload).decode("utf-8", 'ignore')
+        message = bytes(payload).decode("utf-8", 'ignore').strip()
 
-        # Check the message length
+        # Print message only if it's complete and valid
         if len(message) > 0:
-            self.buffer += message  # Append received message to the buffer
+            print(message)
 
-            # Process complete messages immediately
-            if '\n' in self.buffer:
-                messages = self.buffer.split('\n')
-                for msg in messages[:-1]:
-                    print(msg.strip())  # Print each complete message
-                self.buffer = messages[-1]  # Keep the last incomplete message in the buffer
-
-        # Return to receiving mode quickly
+        # Reset the mode to continue receiving
         self.set_mode(MODE.SLEEP)
         self.reset_ptr_rx()
         self.set_mode(MODE.RXCONT)
 
+# Create an instance of the LoRa receiver
 lora = LoRaRcvCont(verbose=False)
+
+# Set mode to standby before starting
 lora.set_mode(MODE.STDBY)
-lora.set_pa_config(pa_select=1)
 
 try:
     lora.start()
