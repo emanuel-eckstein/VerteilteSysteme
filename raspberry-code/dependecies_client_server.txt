@@ -1,0 +1,4 @@
+dependecies_client_server
+
+npm install express
+git clone https://github.com/websockets/ws
