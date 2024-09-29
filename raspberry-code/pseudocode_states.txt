@@ -1,0 +1,77 @@
+generator erzeugt fertige .json dateien
+
+Jobs:
+
+
+!!!!!!!!!!!ALLE FEHLER TESTEN!!!!!!!!!!!!
+
+
+1. Störungen aus LoRa-Daten
+!2. Störungen nach der Zeit
+!3. Störungen Temperatur
+4. LEDs ansteuern
+!5. Pumpenschaltung
+
+START: Neue Datei .txt in /home/admin/VS/signals
+im Format XXX_SX_XXXX_XX
+0.1 S1 Datei
+0.2 S2 Datei
+0.3 S3 Datei
+
+0.4 Prüfsumme (letzte beiden Zahlen _XX(11-99)) stimmt nicht, sie muss beim Signal 
+i+1 von jedem Sensor mit der letzten Prüfsummenzahl anfangen: i = 000_S1_BY_0951_53.json i+1 = 001_S1_BF_1017_35.json
+	0.4.1 Prüfsummenfehler, Konsolenausgabe= g10 y1010
+	Fehlermeldung in .json ausgeben:
+	{
+		"error": "PS",
+	}
+	speichern in /home/admin/VS/json_files
+1. RF Datei (z.B. XXX_S3_BF_0336_88.json)
+1.1 falls nicht im Format XXX_SX(1-3)_BF_XXXX(0000-1023)_XX(11-99)
+	1.1.1 Syntax/Semantikfehler, Konsolenausgabe= g10 y0 r 0
+	Fehlermeldung in .json ausgeben:
+	{
+		"error": "SS",
+	}
+	speichern in /home/admin/VS/json_files
+1.2 falls letzte S3_BF Datei < 0490 und diese Datei < letzter Wert dann
+	1.2.1 Bewässerungsstörung, Konsolenausgabe= g0 y1010 r[10*(X][von SX])
+	Fehlermeldung in .json ausgeben:
+	{
+		"error": "BS",
+	}
+	speichern in /home/admin/VS/json_files
+
+2. RY Datei (z.B. S1_BY_0941_28.json)
+2.1 falls nicht im Format XXX_SX(1-3)_BF_XXXX(0000-1023)_XX(11-99)
+	1.2.1 Syntax/Semantikfehler g10 y0 r 0
+	Fehlermeldung in .json ausgeben:
+	{
+		"error": "SS",
+	}
+2.2 falls XXXX < 500
+	2.2.1 Batterie niedrig, Konsolenausgabe= g0 y10 r[10*(X][von SX])
+	Fehlermeldung in .json ausgeben:
+	{
+		"error": "BN",
+	}
+	speichern in /home/admin/VS/json_files
+speichern in /home/admin/VS/json_files
+3. .txt datei in .json umwandeln:
+{
+    "suffix": "BF",
+    "S_value": "3",
+    "value": "0525",
+}
+speichern in /home/admin/VS/json_files
+
+END: .txt Datei in /home/admin/VS/signals löschen
+
+
+
+
+
+
+
+
+BESONDERHEIT: Prüfsummenfehler sowohl im Client als auch im Server möglich

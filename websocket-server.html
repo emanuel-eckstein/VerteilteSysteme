@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Graphen und Warnungen</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    /* Bereich für die Graphen (obere 2/3 der Seite) */
+    .graph-container {
+      flex: 2;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* 3 Spalten */
+      grid-template-rows: repeat(2, auto);  /* 2 Zeilen */
+      gap: 20px;
+      padding: 20px;
+    }
+    .graph-container h2 {
+      text-align: center;
+      font-size: 28px; /* Titel größer machen */
+    }
+    /* Bereich für Warnungen (unteres Drittel der Seite) */
+    .warnings {
+      flex: 1;
+      padding: 20px;
+      background-color: #f8f8f8;
+      border-top: 2px solid #ddd;
+    }
+    .warnings h2 {
+      margin: 0;
+      padding-bottom: 10px;
+      font-size: 32px; /* Warnungen Titel größer */
+      text-align: center;
+    }
+    .warnings-content {
+      height: 100%;
+      border: 1px solid #ccc;
+      padding: 10px;
+      background-color: #fff;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Bereich für die Graphen -->
+  <div class="graph-container">
+    <div>
+      <h2>S1 Bodenfeuchtigkeit</h2>
+      <canvas id="S1_BF" width="400" height="200"></canvas>
+    </div>
+    <div>
+      <h2>S2 Bodenfeuchtigkeit</h2>
+      <canvas id="S2_BF" width="400" height="200"></canvas>
+    </div>
+    <div>
+      <h2>S3 Bodenfeuchtigkeit</h2>
+      <canvas id="S3_BF" width="400" height="200"></canvas>
+    </div>
+    <div>
+      <h2>S1 Batteriespannung</h2>
+      <canvas id="S1_BY" width="400" height="200"></canvas>
+    </div>
+    <div>
+      <h2>S2 Batteriespannung</h2>
+      <canvas id="S2_BY" width="400" height="200"></canvas>
+    </div>
+    <div>
+      <h2>S3 Batteriespannung</h2>
+      <canvas id="S3_BY" width="400" height="200"></canvas>
+    </div>
+  </div>
+
+  <!-- Bereich für Warnungen -->
+  <div class="warnings">
+    <h2>Warnungen</h2>
+    <div class="warnings-content" id="warnings">
+      <!-- Hier erscheinen später die Warnungen -->
+    </div>
+  </div>
+
+  <script>
+    // Datenstrukturen für alle sechs Sensoren
+    const graphData = {
+      S1_BF: [], S1_BY: [],
+      S2_BF: [], S2_BY: [],
+      S3_BF: [], S3_BY: []
+    };
+
+    // Zeitstempel für die X-Achse für alle sechs Sensoren
+    const timeStamps = {
+      S1_BF: [], S1_BY: [],
+      S2_BF: [], S2_BY: [],
+      S3_BF: [], S3_BY: []
+    };
+
+    // Initialisierung der Graphen
+    const charts = {
+      S1_BF: createChart('S1_BF', 'rgb(255, 99, 132)'),
+      S1_BY: createChart('S1_BY', 'rgb(75, 192, 192)'),
+      S2_BF: createChart('S2_BF', 'rgb(54, 162, 235)'),
+      S2_BY: createChart('S2_BY', 'rgb(255, 206, 86)'),
+      S3_BF: createChart('S3_BF', 'rgb(153, 102, 255)'),
+      S3_BY: createChart('S3_BY', 'rgb(255, 159, 64)')
+    };
+
+    // Funktion zum Erstellen eines neuen Chart.js Graphen
+    function createChart(id, color) {
+      const ctx = document.getElementById(id).getContext('2d');
+      return new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: [],  // Zeitstempel werden später hinzugefügt
+          datasets: [{
+            label: id,
+            data: [],   // Noch keine Daten
+            fill: false,
+            borderColor: color,  // Farbe für den Graph
+            tension: 0.1
+          }]
+        },
+        options: {
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'Zeit',
+                font: {
+                  size: 20  // Schriftgröße für die X-Achse
+                }
+              },
+              ticks: {
+                font: {
+                  size: 16  // Schriftgröße der X-Achsenticks
+                }
+              }
+            },
+            y: {
+              title: {
+                display: true,
+                text: 'Wert',
+                font: {
+                  size: 20  // Schriftgröße für die Y-Achse
+                }
+              },
+              ticks: {
+                font: {
+                  size: 16  // Schriftgröße der Y-Achsenticks
+                }
+              },
+              suggestedMin: 0,
+              suggestedMax: 1000  // Beispielgrenzen für die Y-Achse
+            }
+          },
+          plugins: {
+            legend: {
+              labels: {
+                font: {
+                  size: 16  // Schriftgröße für die Legende
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // WebSocket-Verbindung herstellen
+    const socket = new WebSocket('ws://192.168.0.88:8080');
+
+    // WebSocket geöffnet
+    socket.onopen = function() {
+      console.log('WebSocket Verbindung hergestellt');
+    };
+
+    // Nachricht vom Server empfangen
+    socket.onmessage = function(event) {
+      const data = JSON.parse(event.data);
+
+      // Füge Werte und Zeitstempel in die jeweiligen Graphen ein
+      ['S1_BF', 'S1_BY', 'S2_BF', 'S2_BY', 'S3_BF', 'S3_BY'].forEach(key => {
+        if (data.graphs[key]) {
+          graphData[key].push(...data.graphs[key]);  // Neue Daten hinzufügen
+          timeStamps[key].push(...data.timeStamps[key]);  // Zeitstempel hinzufügen
+        }
+      });
+
+      // Aktualisiere alle sechs Graphen
+      Object.keys(charts).forEach(key => {
+        updateChart(charts[key], graphData[key], timeStamps[key]);
+      });
+    };
+
+    // Funktion zum Aktualisieren eines bestehenden Graphen
+    function updateChart(chart, data, timeStamps) {
+      chart.data.labels = timeStamps;  // Zeitstempel für die X-Achse
+      chart.data.datasets[0].data = data;  // Neue Daten für den Graph
+      chart.update();
+    }
+  </script>
+
+</body>
+</html>

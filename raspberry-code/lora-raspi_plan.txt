@@ -1,4 +1,4 @@
-### HydroIntellix Nachricht1: SX_BF_XXXX_XX;
+fa### HydroIntellix Nachricht1: SX_BF_XXXX_XX;
 SX = S1/S2/S3, Name des HydroIntellix-Gerät
 BF = Bodenfeuchtigkeit
 XXXX = Wert der Bodenfeuchtigkeit von 0 bis 1023
@@ -32,11 +32,11 @@ Nachricht			Warnstufe und Beispiel			LED Anzeige (fortlaufend):
 -default-			kein Fehler				1	0	0
 HelloWorld			1/3, falscher Syntax			10	0	0
 S4_BF...			2/3, falsche Semantik			10	10	0
-S2_BY_0438			3/3, S2 Batterie niedrig		0	01	0101 (r blinkt bei S1 1x, bei S3 3x)				
+S2_BY_0438			3/3, S2 Batterie niedrig		0	10	1010 (r blinkt bei S1 1x, bei S3 3x)				
 auf 	S1_.._XXXX_56
 folgt	S1_.._XXXX_71		2/3, falsche Prüfzahl			10	1010	0
 auf 	S2_BF_0176_56
-folgt	S2_BF_0158_61		3/3, Bewässerungsstörung		0	0101	0101 (r blinkt bei S1 1x, bei S3 3x)
+folgt	S2_BF_0158_61		3/3, Bewässerungsstörung		0	1010	1010 (r blinkt bei S1 1x, bei S3 3x)
 
 
 ### Webserver
@@ -51,10 +51,10 @@ Datenmonitor: Zwei Grafiken, eine für BY und eine für BF (jeweils 3 Graphen).
 ### JSON Format vom Zero zum Server, alle Werte als String:
 
 {
-    "suffix": "By",(BF/BY)
-    "S_value": "X",(1-3)    
-    "value": "XXXX"(0000-1023),
-    "checksum": "XX"(11-99)
+    "suffix": "B(F oder Y)",
+    "S_value": "X",		(1-3)    
+    "value": "XXXX",		(0000-1023)
+    "checksum": "XX"		(11-99)
 }
 
 S1_BY_0845_85
