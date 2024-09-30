@@ -3554,10 +3554,9 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "1efbf040-9e9c-4ac6-8207-3af75fbd9b4d")
 		(property "Reference" "temperature_sensor1"
-			(at 25.4 129.5399 0)
+			(at 40.64 140.462 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3566,7 +3565,7 @@
 			)
 		)
 		(property "Value" "DS18B20"
-			(at 25.4 132.0799 0)
+			(at 35.306 142.494 0)
 			(effects
 				(font
 					(size 1.27 1.27)

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Graphen und Letzte Warnungen</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    /* Bereich für die Graphen (obere 2/3 der Seite) */
+    .graph-container {
+      flex: 2;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* 3 Spalten */
+      grid-template-rows: repeat(2, auto);  /* 2 Zeilen */
+      gap: 20px;
+      padding: 20px;
+    }
+    .graph-container h2 {
+      text-align: center;
+      font-size: 28px; /* Titel größer machen */
+    }
+    /* Bereich für Warnungen und Pumpenzustand (untere 2/3 der Seite) */
+    .bottom-container {
+      flex: 1;
+      display: flex;
+    }
+    .warnings {
+      flex: 2;
+      padding: 20px;
+      background-color: black; /* Hintergrund schwarz */
+      color: white; /* Schriftfarbe weiß */
+      border-top: 2px solid #ddd;
+      text-align: center;
+    }
+    .warnings h2 {
+      margin: 0;
+      padding-bottom: 10px;
+      font-size: 32px; /* Warnungen Titel größer */
+      text-align: center;
+    }
+    .warnings-content {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* 3 Spalten */
+      grid-template-rows: repeat(3, 1fr);   /* 3 Zeilen */
+      gap: 5px;
+      justify-content: center;
+      align-items: center; /* Zentriert die Warnungen */
+      padding: 5px;
+      background-color: black; /* Hintergrund schwarz */
+      color: white; /* Schriftfarbe weiß */
+      font-size: 3em; /* Schriftgröße angepasst */
+    }
+    .pump-status {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      border-left: 2px solid #ddd;
+    }
+    .pump-status h2 {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+    .circle {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background-color: red; /* Standardfarbe ist rot */
+      margin-bottom: 20px;
+    }
+    .pump-text {
+      font-size: 24px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Bereich für die Graphen -->
+  <div class="graph-container">
+    <div>
+      <h2>Bodenfeuchtigkeit (HydroIntellix I)</h2>
+      <canvas id="S1_BF" width="400" height="200"></canvas>
+    </div>
+    <div>
+      <h2>Bodenfeuchtigkeit (HydroIntellix II)</h2>
+      <canvas id="S2_BF" width="400" height="200"></canvas>
+    </div>
+    <div>
+      <h2>Bodenfeuchtigkeit (HydroIntellix III)</h2>
+      <canvas id="S3_BF" width="400" height="200"></canvas>
+    </div>
+    <div>
+      <h2>Batteriespannung (HydroIntellix I)</h2>
+      <canvas id="S1_BY" width="400" height="200"></canvas>
+    </div>
+    <div>
+      <h2>Batteriespannung (HydroIntellix II)</h2>
+      <canvas id="S2_BY" width="400" height="200"></canvas>
+    </div>
+    <div>
+      <h2>Batteriespannung (HydroIntellix III)</h2>
+      <canvas id="S3_BY" width="400" height="200"></canvas>
+    </div>
+  </div>
+  
+  <!-- Bereich für Letzte Warnungen und Pumpenzustand -->
+  <div class="bottom-container">
+    <div class="warnings">
+      <h2>Neueste Warnungen</h2>
+      <div class="warnings-content" id="warnings">
+        <!-- Hier erscheinen später die Warnungen -->
+      </div>
+    </div>
+    <div class="pump-status">
+      <h2>Pumpenzustand</h2>
+      <div class="circle" id="pumpCircle"></div>
+      <div class="pump-text" id="pumpText">ausgeschaltet</div>
+    </div>
+  </div>
+  
+  <script>
+    // Datenstrukturen für alle sechs Sensoren
+    const graphData = {
+      S1_BF: [], S1_BY: [],
+      S2_BF: [], S2_BY: [],
+      S3_BF: [], S3_BY: []
+    };
+
+    // Zeitstempel für die X-Achse für alle sechs Sensoren
+    const timeStamps = {
+      S1_BF: [], S1_BY: [],
+      S2_BF: [], S2_BY: [],
+      S3_BF: [], S3_BY: []
+    };
+
+    // Sensornamen-Mapping
+    const sensorNameMapping = {
+      'S1': 'H I',
+      'S2': 'H II',
+      'S3': 'H III'
+    };
+
+    // Initialisierung der Graphen
+    const charts = {
+      S1_BF: createChart('S1_BF', 'rgb(173, 216, 230)'),
+      S1_BY: createChart('S1_BY', 'rgb(255, 182, 193)'),
+      S2_BF: createChart('S2_BF', 'rgb(77, 77, 255)'),
+      S2_BY: createChart('S2_BY', 'rgb(255, 0, 102)'),
+      S3_BF: createChart('S3_BF', 'rgb(0, 0, 139)'),
+      S3_BY: createChart('S3_BY', 'rgb(139, 0, 0)')
+    };
+
+    // Funktion zum Erstellen eines neuen Chart.js Graphen
+    function createChart(id, color) {
+      const ctx = document.getElementById(id).getContext('2d');
+      return new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: [],  // Zeitstempel werden später hinzugefügt
+          datasets: [{
+            label: '',
+            data: [],   // Noch keine Daten
+            fill: false,
+            borderColor: color,  // Farbe für den Graph
+            tension: 0.1
+          }]
+        },
+        options: {
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'Zeit',
+                font: {
+                  size: 20  // Schriftgröße für die X-Achse
+                }
+              },
+              ticks: {
+                font: {
+                  size: 16  // Schriftgröße der X-Achsenticks
+                }
+              }
+            },
+            y: {
+              title: {
+                display: true,
+                text: 'analoger Wert',
+                font: {
+                  size: 20  // Schriftgröße für die Y-Achse
+                }
+              },
+              ticks: {
+                font: {
+                  size: 16  // Schriftgröße der Y-Achsenticks
+                }
+              },
+              suggestedMin: 0,
+              suggestedMax: 1000  // Beispielgrenzen für die Y-Achse
+            }
+          },
+          plugins: {
+            legend: {
+              display: false  // Verhindert, dass die Legende mit der ID angezeigt wird
+            }
+          }
+        }
+      });
+    }
+
+    // Funktion zum Anzeigen der Warnungen mit Sensorname
+    function displayWarnings(warnings) {
+      const warningContainer = document.getElementById('warnings');
+      warningContainer.innerHTML = '';  // Leere vorherige Warnungen
+
+      warnings.slice(-9).forEach(warning => {
+        const warningElement = document.createElement('div');
+        let color = 'white';
+        let warningText = '';
+
+        // Umwandlung der Abkürzungen in vollständige Beschreibungen
+        switch (warning.error) {
+          case 'PS':
+            warningText = 'Prüfsummenfehler';
+            color = 'yellow';
+            break;
+          case 'SS':
+            warningText = 'Semantik-/Syntaxfehler';
+            color = 'yellow';
+            break;
+          case 'BN':
+            warningText = 'Batteriewarnung';
+            color = 'red';
+            break;
+          case 'BS':
+            warningText = 'Bewässerungsstörung';
+            color = 'red';
+            break;
+          default:
+            warningText = warning.error;  // Falls unbekannt, zeige den Originaltext
+            color = 'white';
+        }
+
+        // Sensorname hinzufügen, falls vorhanden und nicht bei SS
+        if (warning.sensor && warning.error !== 'SS') {
+          const sensorName = sensorNameMapping[warning.sensor] || warning.sensor;
+          warningText += ` (${sensorName})`;
+        }
+
+        warningElement.style.color = color;
+        warningElement.textContent = `${warning.timestamp}: ${warningText}`;
+        warningContainer.appendChild(warningElement);
+      });
+    }
+
+    // WebSocket-Verbindung herstellen, nun mit 'wss://'
+    const socket = new WebSocket('wss://' + window.location.host);
+
+    // WebSocket geöffnet
+    socket.onopen = function() {
+      console.log('WebSocket Verbindung hergestellt');
+    };
+
+    // Nachricht vom Server empfangen
+    socket.onmessage = function(event) {
+      const data = JSON.parse(event.data);
+
+      // Verarbeite Graph-Daten
+      ['S1_BF', 'S1_BY', 'S2_BF', 'S2_BY', 'S3_BF', 'S3_BY'].forEach(key => {
+        if (data.graphs && data.graphs[key]) {
+          graphData[key] = data.graphs[key];  // Aktualisiere die gesamten Daten
+          timeStamps[key] = data.timeStamps[key];  // Aktualisiere die Zeitstempel
+        }
+      });
+
+      // Aktualisiere alle sechs Graphen
+      Object.keys(charts).forEach(key => {
+        updateChart(charts[key], graphData[key], timeStamps[key]);
+      });
+
+      // Aktualisiere Pumpenzustand basierend auf Bodenfeuchtigkeitswerten
+      updatePumpStatus();
+
+      // Verarbeite Warnungen
+      if (data.warnings) {
+        displayWarnings(data.warnings);
+      }
+    };
+
+    // Funktion zum Aktualisieren eines bestehenden Graphen
+    function updateChart(chart, data, timeStamps) {
+      chart.data.labels = timeStamps;  // Zeitstempel für die X-Achse
+      chart.data.datasets[0].data = data;  // Neue Daten für den Graph
+      chart.update();
+    }
+
+    // Funktion zum Überprüfen des Pumpenzustands
+    function updatePumpStatus() {
+      const pumpCircle = document.getElementById('pumpCircle');
+      const pumpText = document.getElementById('pumpText');
+
+      // Prüfe die letzten Werte der Bodenfeuchtigkeitssensoren
+      const lastS1_BF = graphData.S1_BF.slice(-1)[0];
+      const lastS2_BF = graphData.S2_BF.slice(-1)[0];
+      const lastS3_BF = graphData.S3_BF.slice(-1)[0];
+
+      if ((lastS1_BF < 500 || lastS2_BF < 500 || lastS3_BF < 500)) {
+        pumpCircle.style.backgroundColor = 'green';
+        pumpText.textContent = 'eingeschaltet';
+      } else {
+        pumpCircle.style.backgroundColor = 'red';
+        pumpText.textContent = 'ausgeschaltet';
+      }
+    }
+  </script>
+</body>
+</html>
