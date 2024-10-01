@@ -128,14 +128,14 @@ class SignalStateMachine(object):
     # Log and output error messages
     def handle_checksum_error(self):
         sensor = self.extract_sensor(self.current_file)
-        print("Checksum error: g10 y1010")
+        print("Checksum error: g0 y[10*(X][von SX]) r0")
         self.save_error_json("PS", sensor)
         # Nach Fehlerbehandlung Datei in JSON umwandeln
         self.convert_to_json(self.current_file)
         self.complete_conversion(self.current_file)
 
     def handle_syntax_error(self):
-        print("Syntax/Semantic error: g10 y0 r 0")
+        print("Syntax/Semantic error: g10 y0 r0")
         self.syntax_error_detected = True  # Syntaxfehler gesetzt
         self.save_error_json("SS")
         # Bei SS-Fehler keine JSON-Konvertierung
